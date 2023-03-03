@@ -17,8 +17,8 @@ const navigate = useNavigate();
   };
 
 
-  let endpointImage ="https://webapi.exittravel.app/image/upload/image";
-  let endpointAdd ="https://webapi.exittravel.app/Continent/add-continent";
+  let endpointImage = window.baseurl+"/image/upload/image";
+  let endpointAdd = window.baseurl+"/Continent/add-continent";
   
   const [file, setFile] = useState(null);
 

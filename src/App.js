@@ -20,7 +20,8 @@ import AddPhoto from "./pages/AddPhoto";
 import Videos from "./pages/VideosPage/VideosPage";
 import AddVideo from "./pages/VideosPage/AddVideo";
 function App() {
-  window.baseurl = "http://localhost:5010/"
+  // https://webapi.exittravel.app
+  window.baseurl = "https://webapi.exittravel.app"
   return (
     <div class="wrapper">
       <Header />

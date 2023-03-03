@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-let endpointImage = "image/upload/image";
-const baseImage = "http://localhost:5010/images/";
+let endpointImage = window.baseurl+"/image/upload/image";
+const baseImage = window.baseurl+"/images/";
 
 const AddPlace = () => {
   const location = useLocation();
@@ -11,11 +11,12 @@ const AddPlace = () => {
   var [countries, setCountries] = useState(null);
   var [cities, setCities] = useState(null);
   let componentMounted = true;
-  let endPointAddPlace = "https://webapi.exittravel.app/places/add-place";
+  let endPointAddPlace =window.baseurl+"/places/add-place";
 
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [order, setOrder] = useState("");
   const [cityId, setCityId] = useState("");
   const [countryId, setCountryId] = useState("");
 
@@ -28,7 +29,7 @@ const AddPlace = () => {
   //get Countries
   const getCountries = async () => {
     try {
-      const response = await fetch("https://webapi.exittravel.app/countries/get-all-countries");
+      const response = await fetch(window.baseurl+"/countries/get-all-countries");
       console.log(response);
       if (componentMounted) {
         const json = await response.json();
@@ -50,7 +51,7 @@ const AddPlace = () => {
     setCities([])
     try {
       const response = await fetch(
-        "https://webapi.exittravel.app/cities/git-cities-byCountryId-admin" + "?continentId=" + `${catId}`
+        window.baseurl+ "/cities/git-cities-byCountryId-admin" + "?continentId=" + `${catId}`
       );
       console.log(response);
       if (componentMounted) {
@@ -76,6 +77,7 @@ const AddPlace = () => {
 
       setTitle(row.title);
       setDesc(row.desc);
+      setOrder(row.order);
 
     }
   }, []);
@@ -89,6 +91,7 @@ const AddPlace = () => {
     formdata.append("Image", imagee);
     formdata.append("status", "0");
     formdata.append("Desc", desc);
+    formdata.append("order", order.toString());
     formdata.append("CountryId", countryId);
     formdata.append("CityId", cityId);
 
@@ -118,6 +121,7 @@ const AddPlace = () => {
     formdata.append("Image", imagee);
     formdata.append("status", "0");
     formdata.append("Desc", desc);
+    formdata.append("order", order);
     formdata.append("CountryId", countryId);
      formdata.append("CityId", cityId);
     formdata.append("id", location.state.row.id);
@@ -127,7 +131,7 @@ const AddPlace = () => {
       redirect: "follow",
     };
 
-    fetch("https://webapi.exittravel.app/places/update-place", requestOptions)
+    fetch(window.baseurl+"/places/update-place", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
@@ -275,6 +279,21 @@ const AddPlace = () => {
               )}
             </select>
           </div>
+
+          <div className="form-group">
+              <label className="text-right">ترتيب المكان</label>
+              <input
+              type="number"
+                className="form-control text-right"
+                value={order}
+                onChange={(event)=>{
+                    setOrder(event.target.value);
+                }}
+                rows={3}
+                placeholder="اختار الترتيب"
+                defaultValue={""}
+              />
+            </div>
 
           {/* image */}
           <div className="image">

@@ -5,7 +5,7 @@ import AlertDialogDemo from "../componts/AlertDemo";
 import {  Link, useNavigate } from "react-router-dom";
 
 
-const baseImage="http://localhost:5010/images/";
+const baseImage= window.baseurl+"/images/";
 export default function Continents() {
 
 
@@ -30,7 +30,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("Continent/delete-continent", requestOptions)
+fetch( window.baseurl+"/Continent/delete-continent", requestOptions)
   .then(response => response.text())
   .then(result => {
     console.log(result);
@@ -49,7 +49,7 @@ fetch("Continent/delete-continent", requestOptions)
   const [currentPage, setCurrentPage] = useState(1);
 
   let componentMounted = true;
-  let endpointAdd = "https://webapi.exittravel.app/Continent/get-Continents";
+  let endpointAdd = window.baseurl+ "/Continent/get-Continents";
 
 
   const nextPage = (nPages ) => {

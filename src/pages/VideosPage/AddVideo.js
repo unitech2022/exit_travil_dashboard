@@ -7,8 +7,8 @@ const AddVideo = () => {
   var [places, setPlaces] = useState(null);
   let componentMounted = true;
   var [cities, setCities] = useState(null);
-    let endpointImage ="https://webapi.exittravel.app/image/upload/video";
-    let endpointAdd ="https://webapi.exittravel.app/photos/add-Photo";
+    let endpointImage = window.baseurl + "/image/upload/video";
+    let endpointAdd = window.baseurl + "/photos/add-Photo";
     
     const [file, setFile] = useState(null);
     const [placeId, setPlaceId] = useState("");
@@ -54,7 +54,7 @@ const AddVideo = () => {
       }, []);
       const getCities = async () => {
         try {
-          const response = await fetch("cities/get-all-cities");
+          const response = await fetch(window.baseurl + "/cities/get-all-cities");
           console.log(response);
           if (componentMounted) {
             const json = await response.json();
@@ -76,7 +76,7 @@ const AddVideo = () => {
         setPlaces([])
         try {
           const response = await fetch(
-            "places/git-places-by-city-Id-admin" + "?cityId=" + `${catId}`
+            window.baseurl +"/places/git-places-by-city-Id-admin" + "?cityId=" + `${catId}`
           );
           console.log(response);
           if (componentMounted) {

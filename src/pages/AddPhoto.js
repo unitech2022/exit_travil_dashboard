@@ -7,8 +7,8 @@ const AddPhoto = () => {
   var [places, setPlaces] = useState(null);
   let componentMounted = true;
   var [cities, setCities] = useState(null);
-    let endpointImage ="https://webapi.exittravel.app/image/upload/image";
-    let endpointAdd ="https://webapi.exittravel.app/photos/add-Photo";
+    let endpointImage = window.baseurl+"/image/upload/image";
+    let endpointAdd = window.baseurl+"/photos/add-Photo";
     
     const [file, setFile] = useState(null);
     const [placeId, setPlaceId] = useState("");
@@ -54,7 +54,7 @@ const AddPhoto = () => {
       }, []);
       const getCities = async () => {
         try {
-          const response = await fetch("https://webapi.exittravel.app/cities/get-all-cities");
+          const response = await fetch( window.baseurl+"/cities/get-all-cities");
           console.log(response);
           if (componentMounted) {
             const json = await response.json();
@@ -76,7 +76,7 @@ const AddPhoto = () => {
         setPlaces([])
         try {
           const response = await fetch(
-            "places/git-places-by-city-Id-admin" + "?cityId=" + `${catId}`
+            window.baseurl+"/places/git-places-by-city-Id-admin" + "?cityId=" + `${catId}`
           );
           console.log(response);
           if (componentMounted) {
@@ -192,16 +192,16 @@ const AddPhoto = () => {
               alt=""
             />
           </div>
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile"
+        <div className="custom-file">
+          <input type="file" className="custom-file-input" id="customFile"
          onChange={(e) => setFile(e.target.files[0]) } 
           />
-          <label class="custom-file-label" for="customFile">
+          <label className="custom-file-label" for="customFile">
            {file ? "تم اختيار الصورة ":"اختار الصورة  "}
           </label>
         </div>
 
-        <button type="submit" class="btn-submit">
+        <button type="submit" className="btn-submit">
           اضافة
         </button>
 

@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {  useNavigate,useLocation } from "react-router-dom";
-let endpointImage = "https://webapi.exittravel.app/image/upload/image";
-const baseImage = "https://webapi.exittravel.app/images/";
+import { Utils } from "./Utiles";
+let endpointImage =  window.baseurl+"/image/upload/image";
+const baseImage =  window.baseurl+"/images/";
 export default function AddCity() {
 
     const location = useLocation();
@@ -12,7 +13,7 @@ export default function AddCity() {
 
     var [countries, setCountries] = useState(null);
     let componentMounted = true;
-    let endPointAddCity = "cities/add-city";
+    let endPointAddCity =  window.baseurl+"cities/add-city";
   
     const [file, setFile] = useState(null);
     const [title, setTitle] = useState("");
@@ -28,7 +29,7 @@ export default function AddCity() {
     //get Countries
     const getData = async () => {
       try {
-        const response = await fetch("countries/get-all-countries");
+        const response = await fetch( window.baseurl+"countries/get-all-countries");
         console.log(response);
         if (componentMounted) {
           const json = await response.json();
@@ -99,7 +100,7 @@ export default function AddCity() {
           redirect: "follow",
         };
     
-        fetch("cities/update-city", requestOptions)
+        fetch( window.baseurl+"cities/update-city", requestOptions)
           .then((response) => response.text())
           .then((result) => {
             console.log(result);

@@ -5,11 +5,11 @@ import {  Link, NavLink, useNavigate } from "react-router-dom";
 import Loading from "../componts/Loading";
 import AlertDialogDemo from "../componts/AlertDemo";
 
-const baseImage="https://webapi.exittravel.app/images/";
+const baseImage= window.baseurl+"/images/";
 const Countries = () => {
   var [data, setData] = useState(null);
   let componentMounted = true;
-  let endpointAdd = "countries/get-countries";
+  let endpointAdd =  window.baseurl+"countries/get-countries";
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -35,7 +35,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("countries/delete-country", requestOptions)
+fetch( window.baseurl+"/countries/delete-country", requestOptions)
   .then(response => response.text())
   .then(result => {
     console.log(result);

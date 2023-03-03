@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-let endpointImage = "https://webapi.exittravel.app/image/upload/image";
+let endpointImage = window.baseurl+ "/image/upload/image";
 
 const languages = ["English", "Arabic", "France", "Span", "Protogale"];
 
 export default function AddCountry() {
   var [continents, setContinents] = useState(null);
   let componentMounted = true;
-  let endPointAddCountry = "https://webapi.exittravel.app/countries/add-country";
+  let endPointAddCountry =  window.baseurl+"/countries/add-country";
 
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
@@ -26,7 +26,7 @@ export default function AddCountry() {
   //get Countries
   const getData = async (page) => {
     try {
-      const response = await fetch("https://webapi.exittravel.app/Continent/get-Continents-all");
+      const response = await fetch( window.baseurl+"/Continent/get-Continents-all");
       console.log(response);
       if (componentMounted) {
         const json = await response.json();

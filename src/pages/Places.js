@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import {  Link, NavLink, useNavigate } from "react-router-dom";
 import Loading from "../componts/Loading";
 import AlertDialogDemo from "../componts/AlertDemo";
-const baseImage="https://webapi.exittravel.app/images/";
+const baseImage= window.baseurl +"/images/";
 
 
 
@@ -11,7 +11,7 @@ export default function Places() {
 
     var [data, setData] = useState(null);
     let componentMounted = true;
-    let endpointGitPlaces = "https://webapi.exittravel.app/places/get-places";
+    let endpointGitPlaces =  window.baseurl+"/places/get-places";
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
   
@@ -52,7 +52,7 @@ const prevPage = () => {
     redirect: 'follow'
   };
   
-  fetch("https://webapi.exittravel.app/places/delete-place", requestOptions)
+  fetch(window.baseurl+"/places/delete-place", requestOptions)
     .then(response => response.text())
     .then(result => {
       console.log(result);

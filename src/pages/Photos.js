@@ -8,12 +8,12 @@ import AlertDialogDemo from "../componts/AlertDemo";
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import '../AlertStyle.css';
 
-const baseImage="https://webapi.exittravel.app/images/";
+const baseImage= window.baseurl+"/images/";
 export default function Photos() {
 
     var [data, setData] = useState(null);
     let componentMounted = true;
-    let endpointGitPhotos = "photos/get-photos";
+    let endpointGitPhotos = window.baseurl + "/photos/get-photos";
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -86,7 +86,7 @@ const prevPage = () => {
     redirect: 'follow'
   };
   
-  fetch("https://webapi.exittravel.app/photos/delete-Photo", requestOptions)
+  fetch(window.baseurl + "/photos/delete-Photo", requestOptions)
     .then(response => response.text())
     .then(result => {
       console.log(result);

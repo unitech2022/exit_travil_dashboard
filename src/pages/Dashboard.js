@@ -8,16 +8,16 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
 
   let componentMounted = true;
-  let endpoint ="https://webapi.exittravel.app/home/get-home-dash";
+  let endpoint = window.baseurl+"/home/get-home-dash";
   let headers = new Headers();
 
   headers.append('Content-Type', 'application/json');
   headers.append('Accept', 'application/json');
 
 
-  headers.append('Access-Control-Allow-Credentials', 'true');
 
-  headers.append('GET', 'POST', 'OPTIONS');
+
+
 
 
 
@@ -25,7 +25,9 @@ export default function Dashboard() {
     setLoading(true);
     try{
 
-      const response = await fetch(endpoint,{ headers: headers});
+      const response = await fetch(endpoint,{ 
+        mode:"cors",
+        headers: headers});
       console.log(response);
       if (componentMounted) {
        const json=await response.json();

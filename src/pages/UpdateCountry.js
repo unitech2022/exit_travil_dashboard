@@ -15,7 +15,7 @@ export default function UpdateCountry() {
 
     var [continents, setContinents] = useState(null);
     let componentMounted = true;
-    let endPointUpdateCountry = "https://webapi.exittravel.app/countries/update-country";
+    let endPointUpdateCountry = window.baseurl+"/countries/update-country";
   
     const [file, setFile] = useState(null);
     const [name, setName] = useState("");

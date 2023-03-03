@@ -5,11 +5,11 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import Title from "../../componts/title";
 import Loading from "../../componts/Loading";
 
-const baseImage = "https://webapi.exittravel.app/videos/";
+const baseImage =  window.baseurl+"/videos/";
 export default function Videos() {
   var [data, setData] = useState(null);
   let componentMounted = true;
-  let endpointGitPhotos = "https://webapi.exittravel.app/photos/get-Videos";
+  let endpointGitPhotos =  window.baseurl+"/photos/get-Videos";
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -76,7 +76,7 @@ export default function Videos() {
       redirect: "follow",
     };
 
-    fetch("photos/delete-Photo", requestOptions)
+    fetch( window.baseurl + "/photos/delete-Photo", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
