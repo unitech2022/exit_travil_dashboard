@@ -18,7 +18,7 @@ export default class Menu extends Component {
           <NavLink to="#" className="d-block">Alexander Pierce</NavLink>
         </div>
       </div> */}
-       <h1>Exit Travel</h1>
+       <h1>EzyTravel</h1>
       {/* Sidebar Menu */}
       <nav className="mt-2">
         <ul className="nav nav-pills nav-sidebar flex-column"  role="menu" data-accordion="false">
@@ -50,7 +50,7 @@ export default class Menu extends Component {
             <NavLink to="/Countries" className="nav-link">
               <i class="bi bi-calendar4"></i>
               <p>
-                البلدان 
+              الدول 
                
               </p>
             </NavLink>
@@ -60,7 +60,17 @@ export default class Menu extends Component {
             <NavLink to="/cities" className="nav-link">
               <i class="bi bi-fan"></i>
               <p>
-                القري 
+                المدن 
+              
+              </p>
+            </NavLink>
+          </li>
+
+          <li className="nav-item">
+            <NavLink to="/mostCities" className="nav-link">
+              <i class="bi bi-fan"></i>
+              <p>
+                 المدن الأكثر زيارة 
               
               </p>
             </NavLink>
@@ -75,6 +85,14 @@ export default class Menu extends Component {
             </NavLink>
           </li>
 
+          <li className="nav-item">
+            <NavLink to="/mostPlaces" className="nav-link">
+            <i class="bi bi-hospital-fill"></i>
+              <p>
+              الأماكن السياحية الأكثر زيارة
+              </p>
+            </NavLink>
+          </li>
           <li className="nav-item">
             <NavLink to="/photos" className="nav-link">
             <i class="bi bi-image-fill"></i>

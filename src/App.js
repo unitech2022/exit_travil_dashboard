@@ -19,9 +19,13 @@ import Photos from "./pages/Photos";
 import AddPhoto from "./pages/AddPhoto";
 import Videos from "./pages/VideosPage/VideosPage";
 import AddVideo from "./pages/VideosPage/AddVideo";
+import MostCities from "./pages/MostCities";
+import MostPlaces from "./pages/MostPlaces";
 function App() {
   // https://webapi.exittravel.app
-  window.baseurl = "https://webapi.exittravel.app"
+  // window.baseurl = "https://webapi.exittravel.app"
+  window.baseurl = "http://localhost:5010"
+ 
   return (
     <div class="wrapper">
       <Header />
@@ -43,12 +47,14 @@ function App() {
           <Route path="/addPhoto" element={<AddPhoto />} />
           <Route path="/videos" element={<Videos/>} />
           <Route path="/addVideo" element={<AddVideo/>} />
+          <Route path="/mostCities" element={<MostCities/>} />
+          <Route path="/mostPlaces" element={<MostPlaces/>} />
           
           
         </Routes>
       </div>
       <Menu />
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 }

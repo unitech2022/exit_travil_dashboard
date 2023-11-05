@@ -8,7 +8,7 @@ import AlertDialogDemo from "../componts/AlertDemo";
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import '../AlertStyle.css';
 
-const baseImage= window.baseurl+"/images/";
+const baseImage= window.baseurl + "/images/";
 export default function Photos() {
 
     var [data, setData] = useState(null);

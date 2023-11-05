@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {  useNavigate,useLocation } from "react-router-dom";
 import { Utils } from "./Utiles";
-let endpointImage =  window.baseurl+"/image/upload/image";
+let endpointImage =  window.baseurl+ "/image/upload/image";
 const baseImage =  window.baseurl+"/images/";
 export default function AddCity() {
 
@@ -13,13 +13,18 @@ export default function AddCity() {
 
     var [countries, setCountries] = useState(null);
     let componentMounted = true;
-    let endPointAddCity =  window.baseurl+"cities/add-city";
+    let endPointAddCity =  window.baseurl+"/cities/add-city";
   
     const [file, setFile] = useState(null);
+    const [fileFlag, setFileFlag] = useState(null);
     const [title, setTitle] = useState("");
-
+    const [image, setImage] = useState("");
+    const [imageFlag, setImageFlag] = useState("");
     const [countryId, setCountryId] = useState("");
-  
+    const [checked, setChecked] = React.useState(false);
+    const handleChange = () => {
+      setChecked(!checked);
+    };
     // nav  router
     const navigate = useNavigate();
     const navigateHome = () => {
@@ -29,7 +34,7 @@ export default function AddCity() {
     //get Countries
     const getData = async () => {
       try {
-        const response = await fetch( window.baseurl+"countries/get-all-countries");
+        const response = await fetch( window.baseurl+"/countries/get-all-countries");
         console.log(response);
         if (componentMounted) {
           const json = await response.json();
@@ -53,16 +58,20 @@ export default function AddCity() {
         const row = location.state.row;
 
        setTitle(row.title);
+      setImage(row.image);
+      setImageFlag(row.imageFlag);
+      setChecked(row.isMostPopular);
       }
     }, []);
   
     /// add country
-    const addCity = async (name, imagee) => {
+    const addCity = async (name) => {
         console.log("add")
       // Using Fetch API
       var formdata = new FormData();
       formdata.append("title", title);
-      formdata.append("Image", imagee);
+      formdata.append("Image", image);
+    formdata.append("isMostPopular", checked);
       formdata.append("status", "0");
       formdata.append("countryId", countryId);
   
@@ -85,12 +94,13 @@ export default function AddCity() {
 
 
     // updateCity
-    const updateCity = async (name, imagee) => {
+    const updateCity = async (name) => {
         console.log("update")
         // Using Fetch API
         var formdata = new FormData();
         formdata.append("title", title);
-        formdata.append("Image", imagee);
+        formdata.append("Image", image);
+        formdata.append("isMostPopular", checked);
         formdata.append("status", "0");
         formdata.append("countryId", countryId);
         formdata.append("id", location.state.row.id);
@@ -100,12 +110,13 @@ export default function AddCity() {
           redirect: "follow",
         };
     
-        fetch( window.baseurl+"cities/update-city", requestOptions)
+        fetch(window.baseurl+ "/cities/update-city", requestOptions)
           .then((response) => response.text())
           .then((result) => {
             console.log(result);
            
             setFile("");
+            setFileFlag("")
             navigateHome();
           })
           .catch((error) => console.log("error", error));
@@ -113,51 +124,83 @@ export default function AddCity() {
 
 
   
+
+      // upload images
+      const uploadImage=async (type,fileImage)=>{
+        try {
+          const formData = new FormData();
+          formData.append("file", fileImage);
+    
+          const resp = await axios
+            .post(endpointImage, formData, {
+              headers: {
+                "content-type": "multipart/form-data",
+              },
+            })
+            .then((e) => {
+              console.log(e.data + "imaage");
+        if(type === 1){
+         setImageFlag(e.data);
+         console.log(e.data + "imaag");
+        }else{
+          setImage(e.data);
+          console.log(e.data + "imaagFlage");
+        }  
+     
+              // addCity(title, e.data);
+            });
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+
     const handleSubmit = async (event) => {
       event.preventDefault();
       if(location.state == null){
         try {
-            const formData = new FormData();
-            formData.append("file", file);
+            // const formData = new FormData();
+            // formData.append("file", file);
       
-            const resp = await axios
-              .post(endpointImage, formData, {
-                headers: {
-                  "content-type": "multipart/form-data",
-                },
-              })
-              .then((e) => {
-                console.log(e.data);
-      
-                addCity(title, e.data);
-              });
+            // const resp = await axios
+            //   .post(endpointImage, formData, {
+            //     headers: {
+            //       "content-type": "multipart/form-data",
+            //     },
+            //   })
+            //   .then((e) => {
+            //     console.log(e.data);
+       
+             addCity(title);
+            //   });
           } catch (e) {
             console.log(e);
           }
       }else{
-         if(file !=null){
-            try {
-                const formData = new FormData();
-                formData.append("file", file);
+        //  if(file !=null){
+        //     try {
+        //         const formData = new FormData();
+        //         formData.append("file", file);
           
-                const resp = await axios
-                  .post(endpointImage, formData, {
-                    headers: {
-                      "content-type": "multipart/form-data",
-                    },
-                  })
-                  .then((e) => {
-                    console.log(e.data);
+        //         const resp = await axios
+        //           .post(endpointImage, formData, {
+        //             headers: {
+        //               "content-type": "multipart/form-data",
+        //             },
+        //           })
+        //           .then((e) => {
+        //             console.log(e.data);
           
-                    updateCity(title, e.data);
-                  });
-              } catch (e) {
-                console.log(e);
-              }
+        //             updateCity(title, e.data);
+        //           });
+        //       } catch (e) {
+        //         console.log(e);
+        //       }
 
-         }else {
-            updateCity(title, location.state.row.image);
-         }
+        //  }else {
+          console.log(image + "" +imageFlag);
+            updateCity(title);
+        //  }
        
 
       }
@@ -209,8 +252,46 @@ export default function AddCity() {
               )}
             </select>
           </div>
-  
+
+          {/* image flag */}
+          {/* <div className="image">
+            <img
+              src={fileFlag ? URL.createObjectURL(fileFlag) :location.state?baseImage+location.state.row.imageFlag : "./assets/photo.jpeg"}
+              alt=""
+            />
+          </div>
+          <div class="custom-file">
+            <input
+              type="file"
+              class="custom-file-input"
+              id="customFile"
+              onChange={(e) => {
+                setFileFlag(e.target.files[0]);
+                uploadImage(1,e.target.files[0]);
+              }
+              
+         
+              }
+            />
+            <label class="custom-file-label" for="customFile">
+              {fileFlag ? "تم اختيار الصورة " : "اختار صورة العلم  "}
+            </label>
+          </div> */}
           {/* image */}
+          <div>
+      <label>
+        <input className="m-2"
+          type="checkbox"
+          width={100}
+          height={100}
+          checked={checked}
+          onChange={handleChange}
+        />
+        تصنيف ضمن الأكثر زيارة
+      </label>
+
+    
+    </div>
           <div className="image">
             <img
               src={file ? URL.createObjectURL(file) :location.state?baseImage+location.state.row.image : "./assets/photo.jpeg"}
@@ -222,7 +303,13 @@ export default function AddCity() {
               type="file"
               class="custom-file-input"
               id="customFile"
-              onChange={(e) => setFile(e.target.files[0])}
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+                uploadImage(2,e.target.files[0]);
+              }
+              
+         
+              }
             />
             <label class="custom-file-label" for="customFile">
               {file ? "تم اختيار الصورة " : "اختار الصورة  "}

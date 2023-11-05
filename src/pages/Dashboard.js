@@ -97,7 +97,7 @@ console.log(e+"errror");
               <div className="small-box bg-success">
                 <div className="inner">
                   <h3>{data.countries}<sup style={{fontSize: 20}}></sup></h3>
-                  <p>البلاد</p>
+                  <p>الدول</p>
                 </div>
                 <div className="icon">
                   <i className="ion ion-stats-bars" />
@@ -111,7 +111,7 @@ console.log(e+"errror");
               <div className="small-box bg-warning">
                 <div className="inner">
                   <h3>{data.cities}</h3>
-                  <p>القرى</p>
+                  <p>المدن</p>
                 </div>
                 <div className="icon">
                   <i className="ion ion-person-add" />

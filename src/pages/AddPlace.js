@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-let endpointImage = window.baseurl+"/image/upload/image";
-const baseImage = window.baseurl+"/images/";
+import { OnInput, baseUrl, onInputInvalid } from "../Constans";
+let endpointImage = baseUrl+"/image/upload/image";
+const baseImage = baseUrl+"/images/";
 
 const AddPlace = () => {
   const location = useLocation();
@@ -11,14 +12,21 @@ const AddPlace = () => {
   var [countries, setCountries] = useState(null);
   var [cities, setCities] = useState(null);
   let componentMounted = true;
-  let endPointAddPlace =window.baseurl+"/places/add-place";
+  let endPointAddPlace =baseUrl + "/places/add-place";
 
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [order, setOrder] = useState("");
+  const [latLng, setLatLng] = useState();
+
+  const [address, setAddress] = useState();
   const [cityId, setCityId] = useState("");
   const [countryId, setCountryId] = useState("");
+  const [checked, setChecked] = React.useState(false);
+  const handleChange = () => {
+    setChecked(!checked);
+  };
 
   // nav  router
   const navigate = useNavigate();
@@ -78,7 +86,9 @@ const AddPlace = () => {
       setTitle(row.title);
       setDesc(row.desc);
       setOrder(row.order);
-
+      setAddress(row.addressName);
+      setLatLng(row.latLng);
+      setChecked(row.isMostPopular);
     }
   }, []);
 
@@ -90,8 +100,12 @@ const AddPlace = () => {
     formdata.append("title", title);
     formdata.append("Image", imagee);
     formdata.append("status", "0");
+    formdata.append("LatLng", latLng);
+   
+    formdata.append("AddressName", address);
+    formdata.append("isMostPopular", checked);
     formdata.append("Desc", desc);
-    formdata.append("order", order.toString());
+    formdata.append("order", order);
     formdata.append("CountryId", countryId);
     formdata.append("CityId", cityId);
 
@@ -121,6 +135,9 @@ const AddPlace = () => {
     formdata.append("Image", imagee);
     formdata.append("status", "0");
     formdata.append("Desc", desc);
+    formdata.append("LatLng", latLng);
+    formdata.append("isMostPopular", checked);
+    formdata.append("AddressName", address);
     formdata.append("order", order);
     formdata.append("CountryId", countryId);
      formdata.append("CityId", cityId);
@@ -161,7 +178,7 @@ const AddPlace = () => {
             addPlace(title, e.data);
           });
       } catch (e) {
-        console.log(e);
+        console.log(e+"djdjdjdjdjd");
       }
     } else {
       if (file != null) {
@@ -190,10 +207,10 @@ const AddPlace = () => {
   };
 
   return (
-    <div>
-      <div>
-        <form onSubmit={handleSubmit} className="forms">
-          <div class="form-group">
+    <div >
+      <div className="d-flex justify-content-center m-3" >
+        <form onSubmit={handleSubmit} >
+          <div>
             <label className="text-right" for="exampleInputEmail1">
               اسم المكان
             </label>
@@ -214,7 +231,7 @@ const AddPlace = () => {
           {/* desc */}
          
             {/* textarea */}
-            <div className="form-group">
+            <div>
               <label className="text-right">تفاصيل المكان</label>
               <textarea
                 className="form-control text-right"
@@ -227,6 +244,35 @@ const AddPlace = () => {
                 defaultValue={""}
               />
             </div>
+            <br />
+            {/* address */}
+            <div>
+                 <label className="form-label text-right"> العنوان</label>
+                  <input onInvalid={onInputInvalid}
+                  value={address}
+                  onChange={(event)=>{
+                    setAddress(event.target.value);
+                }}
+                    onInput={OnInput} required autoComplete="off" name="Name" type="text" className="form-control" />
+                  <span asp-validation-for="Name" className="text-danger" />
+                 </div>
+                 <br />
+                 <div>
+                 <label className="form-label text-right">(Latitude)خط العرض , (Longitude)خط الطول</label>
+                 
+                  <input onInvalid={onInputInvalid}
+                  value={latLng}
+                  
+                  onChange={(event)=>{
+                    setLatLng(event.target.value);
+                }}
+                    onInput={OnInput} required autoComplete="off" name="Name" type="text" className="form-control" />
+                  <span asp-validation-for="Name" className="text-danger" />
+                 </div>
+               
+        
+
+                
       
           {/* countries */}
           <div className="form-group">
@@ -294,10 +340,27 @@ const AddPlace = () => {
                 defaultValue={""}
               />
             </div>
+         
+            <div>
+      <label>
+        <input className="m-2"
+          type="checkbox"
+          width={100}
+          height={100}
+          checked={checked}
+          onChange={handleChange}
+        />
+        تصنيف ضمن الأكثر زيارة
+      </label>
+
+    
+    </div>
 
           {/* image */}
-          <div className="image">
+          <div className="image text-center m-1">
             <img
+            width={100}
+            height={100}
               src={
                 file
                   ? URL.createObjectURL(file)

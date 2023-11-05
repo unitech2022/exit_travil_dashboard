@@ -9,7 +9,7 @@ const baseImage= window.baseurl+"/images/";
 const Countries = () => {
   var [data, setData] = useState(null);
   let componentMounted = true;
-  let endpointAdd =  window.baseurl+"countries/get-countries";
+  let endpointAdd =  window.baseurl + "/countries/get-countries";
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -20,11 +20,8 @@ const Countries = () => {
   
   const navigate = useNavigate();
 
-
-
 //delete item 
-//delete item 
-const deleteItem=async(couponId)=>{
+const deleteItem=async(couponId)=>{ 
 
   var formdata = new FormData();
 formdata.append("couponId", couponId);
@@ -35,7 +32,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch( window.baseurl+"/countries/delete-country", requestOptions)
+fetch( window.baseurl + "/countries/delete-country", requestOptions)
   .then(response => response.text())
   .then(result => {
     console.log(result);
@@ -105,7 +102,7 @@ fetch( window.baseurl+"/countries/delete-country", requestOptions)
   return (
     <div className="continent">
  
-      <Title route={"/addCountry"} text={"البلدان"}/>
+      <Title route={"/addCountry"} text={"الدول"}/>
       {data ? (
           <div className="orders">
             <table className="responsive-table">

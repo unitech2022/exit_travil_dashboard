@@ -4,13 +4,14 @@ import React, { useState, useEffect } from "react";
 import {  Link, NavLink, useNavigate } from "react-router-dom";
 import Loading from "../componts/Loading";
 import AlertDialogDemo from "../componts/AlertDemo";
-const baseImage="https://webapi.exittravel.app/images/";
+import { baseUrl } from '../Constans';
+const baseImage=baseUrl+ "/images/";
 
 
 const Cities = () => {
     var [data, setData] = useState(null);
     let componentMounted = true;
-    let endpointGitCities = "cities/get-cities";
+    let endpointGitCities = window.baseurl +"/cities/get-cities";
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
   
@@ -51,7 +52,7 @@ const prevPage = () => {
     redirect: 'follow'
   };
   
-  fetch("cities/delete-city", requestOptions)
+  fetch(window.baseurl+ "/cities/delete-city", requestOptions)
     .then(response => response.text())
     .then(result => {
       console.log(result);
@@ -105,7 +106,7 @@ const prevPage = () => {
     return (
       <div className="continent">
  
-      <Title route={"/addCity"} text={"القرى"}/>
+      <Title route={"/addCity"} text={"المدن"}/>
 
       {data ? (
           <div className="orders">

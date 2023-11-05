@@ -1,3 +1,4 @@
+
 import Title from '../componts/title'
 import React, { useState, useEffect } from "react";
 import {  Link, NavLink, useNavigate } from "react-router-dom";
@@ -5,14 +6,10 @@ import Loading from "../componts/Loading";
 import AlertDialogDemo from "../componts/AlertDemo";
 import { baseUrl } from '../Constans';
 const baseImage= baseUrl+"/images/";
-
-
-
-export default function Places() {
-
+const MostPlaces = () => {
     var [data, setData] = useState(null);
     let componentMounted = true;
-    let endpointGitPlaces =  window.baseurl+"/places/get-places";
+    let endpointGitPlaces =  window.baseurl+"/places/git-places-most-popular";
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
   
@@ -79,7 +76,7 @@ const prevPage = () => {
    
       try {
           
-        const response = await fetch(endpointGitPlaces+"?page="+`${page}`);
+        const response = await fetch(endpointGitPlaces);
         console.log(response);
         if (componentMounted) {
           const json = await response.json();
@@ -108,7 +105,7 @@ const prevPage = () => {
   return (
     <div className="continent">
  
-    <Title route={"/addPlace"} text={"الأماكن السياجية"}/>
+    <Title route={"/addPlace"} text={"الأماكن السياحية الأكثر زيارة"}/>
 
     {data ? (
           <div className="orders">
@@ -122,7 +119,7 @@ const prevPage = () => {
                 <td>الحذف</td>
               </thead>
               <tbody>
-                {data.items.map((item) => {
+                {data.map((item) => {
                   return (
                     <tr>
                       <td>{item.id}</td>
@@ -158,49 +155,7 @@ const prevPage = () => {
               </tbody>
             </table>
             <nav>
-            <ul className='pagination justify-content-center'>
-                <li className="page-item">
-                    <button className="page-link" 
-                        onClick={prevPage} 
-                        href='#'>
-                        
-                        Previous
-                    </button>
-                </li>
-                {Array.from({length: data.totalPages}, (_, index) => index + 1).map((e)=> {
-                    
-                  return  (
-                    <li key ={e} 
-                        className= {`page-item ${currentPage == e  ? 'active' : ''} `} >
-
-                        <button onClick={() =>{
-                         
-                       
-                         setCurrentPage(e)
-                        
-                          console.log(e + " / " +currentPage);
-                           getData(e)
-                       
-                       
-                         
-
-                        }}  
-                            className='page-link' 
-                            href='#'>
-                            
-                            {e}
-                        </button>
-                    </li>
-                )})}
-                <li className="page-item">
-                    <button className="page-link" 
-                        onClick={()=>{nextPage(data.totalPages)}}
-                        href='#'>
-                        
-                        Next
-                    </button>
-                </li>
-            </ul>
+      
         </nav>
           </div>
         ) : (
@@ -211,4 +166,5 @@ const prevPage = () => {
  </div>
   )
 }
-
+ 
+export default MostPlaces;
